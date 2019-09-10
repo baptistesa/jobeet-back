@@ -6,11 +6,19 @@ module.exports = {
 };
 
 function getAllUsers(req, res, next) {
-    res.status(200)
-        .json({
-            status: "ok",
-            message: "Hello lovelace"
-        })
+    db.query("SELECT * FROM users", function (error, results, fields) {
+        if (error)
+            res.status(500)
+                .json({
+                    status: "ko",
+                    data: "error"
+                })
+        res.status(200)
+            .json({
+                status: "ok",
+                data: results
+            })
+    })
 }
 
 function getUser(req, res, next) {
@@ -23,10 +31,18 @@ function getUser(req, res, next) {
                     data: "error"
                 })
         res.status(200)
-           .json({
-               status: "ok",
-               data: results
-           })
+            .json({
+                status: "ok",
+                data: results
+            })
 
     });
+}
+
+function addUser(req, res, next) {
+    var name = req.body.name;
+    var last_name = req.body.last_name;
+    var mail = req.body.mail;
+    var phone = req.body.phone;
+    var password = req.body.password;
 }
