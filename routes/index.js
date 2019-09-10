@@ -9,5 +9,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/getUsers', Users.getAllUsers);
+router.get('/getUser/:id', Users.getUser);
 
 module.exports = router;
