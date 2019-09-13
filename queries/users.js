@@ -82,10 +82,11 @@ function login(req, res, next) {
     var mail = req.body.mail;
     var password = req.body.password;
     db.query("SELECT * FROM users WHERE mail = ?", mail, function (error, results, fields) {
-        if (error)
+        if (error || results[0] == null)
             res.status(500)
                 .json({
-                    status: "ko"
+                    status: "ko",
+                    data : "Wrong password"
                 })
         else {
             bcrypt.compare(password, results[0].password, function (err, res2) {
@@ -95,7 +96,7 @@ function login(req, res, next) {
                         .json({
                             status: "ok",
                             token: token,
-                            data: req.body
+                            data: results[0]
                         })
                 }
                 else
