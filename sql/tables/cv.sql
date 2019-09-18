@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS cv (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_user INT NOT NULL,
+  description TEXT
+)
