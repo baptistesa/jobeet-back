@@ -1,7 +1,8 @@
 var db = require("../sql/init");
 
 module.exports = {
-    getAllUsers: getAllUsers
+    addCV: addCV,
+    getCV : getCV
 };
 
 function addCV(req, res, next) {
