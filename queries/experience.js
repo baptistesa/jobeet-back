@@ -11,6 +11,6 @@ function addExperience(req, res, next) {
     var end_date = req.body.end_date;
 
     db.query("INSERT INTO experience VALUES(?, ?, ?, ?)", [company, description, start_date, end_date], function(errors, results, fields) {
-
+        
     })
 }
