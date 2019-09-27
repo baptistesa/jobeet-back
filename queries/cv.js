@@ -3,8 +3,7 @@ var db = require("../sql/init");
 
 module.exports = {
     addCV: addCV,
-    getCV: getCV,
-    uploadCV: uploadCV
+    getCV: getCV
 };
 
 function addCV(req, res, next) {
@@ -42,31 +41,4 @@ function getCV(req, res, next) {
                 data: results
             })
     })
-}
-
-function uploadCV(req, res, next) {
-    const fs = require('fs');
-    const pdf = require('pdf-parse');
-
-    let dataBuffer = fs.readFileSync('cv.pdf');
-
-    pdf(dataBuffer).then(function (data) {
-
-        // number of pages
-        console.log(data.numpages);
-        // number of rendered pages
-        console.log(data.numrender);
-        // PDF info
-        console.log(data.info);
-        // PDF metadata
-        console.log(data.metadata);
-        // PDF.js version
-        // check https://mozilla.github.io/pdf.js/getting_started/
-        console.log(data.version);
-        // PDF text
-        console.log(data.text);
-
-    });
-
-
 }
