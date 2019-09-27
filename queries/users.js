@@ -2,11 +2,17 @@ var db = require("../sql/init");
 var jwt = require("./jwt")
 var bcrypt = require('bcrypt');
 
+const accountSid = 'ACb00cd72949c5957196b4fbfce7163954';
+const authToken = '05779f22f222f35564aaed7f44334939';
+const client = require('twilio')(accountSid, authToken);
+
+
 module.exports = {
     getAllUsers: getAllUsers,
     getUser: getUser,
     signup: signup,
-    login: login
+    login: login,
+    confirmCode: confirmCode
 };
 
 function getAllUsers(req, res, next) {
@@ -50,6 +56,7 @@ function signup(req, res, next) {
     var phone = req.body.phone;
     var password = req.body.password;
     var role = req.body.role;
+    var code = Math.floor(Math.random() * (100000 - 999999) + 999999);
     bcrypt.hash(password, 10, function (err, res2) {
         if (err)
             res.status(500)
@@ -58,13 +65,14 @@ function signup(req, res, next) {
                 })
         else {
             password = res2;
-            db.query("INSERT INTO users(name, last_name, mail, phone, password, role) VALUES(?, ?, ?, ?, ?, ?)", [name, last_name, mail, phone, password, role], function (error, results, fields) {
+            db.query("INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified) VALUES(?, ?, ?, ?, ?, ?, ?, false)", [name, last_name, mail, phone, password, role, code], function (error, results, fields) {
                 if (error)
                     res.status(500)
                         .json({
                             status: "ko"
                         })
                 else {
+                    // sendSMS(code, name, phone)
                     let token = jwt.createJWToken(req.body);
                     res.status(200)
                         .json({
@@ -78,6 +86,70 @@ function signup(req, res, next) {
     });
 }
 
+function sendSMS(code, name, phone) {
+    client.messages.create({
+        body: 'Bonjour ' + name + ', \nValider votre inscription en rentrant ce code : ' + code + '\nLa team Jobeet',
+        to: phone,
+        from: 'Jobeet'
+    })
+        .then((message) => {
+            return;
+        })
+        .catch(function (err) {
+            console.log('error: ' + err);
+            return;
+        });
+    return;
+}
+
+function confirmCode(req, res, next) {
+    var mail = req.body.mail;
+    var code = req.body.code;
+    db.query("SELECT * FROM users WHERE mail=?", mail, function (error, results, fields) {
+        if (error)
+            res.status(500)
+                .json({
+                    status: "ko"
+                })
+        else {
+            if (code == results[0].code) {
+                db.query("UPDATE USERS SET is_verified=true WHERE mail=?", mail, function (error, results, fields) {
+                    if (error) {
+                        res.status(500)
+                            .json({
+                                status: "ko"
+                            })
+                        return;
+                    }
+                    db.query("SELECT * FROM users WHERE mail=?", mail, function (error, results, fields) {
+                        if (!error) {
+
+                            res.status(200)
+                                .json({
+                                    status: "ok",
+                                    data : {
+                                        id : results[0].id,
+                                        last_name : results[0].last_name,
+                                        name : results[0].name,
+                                        mail : results[0].mail,
+                                        role : results[0].role
+                                    }
+                                })
+                        }
+                    })
+                })
+            }
+            else
+                res.status(500)
+                    .json({
+                        status: "ko",
+                        data: "Invalid code"
+                    })
+        }
+    })
+}
+
+
 function login(req, res, next) {
     var mail = req.body.mail;
     var password = req.body.password;
@@ -86,9 +158,17 @@ function login(req, res, next) {
             res.status(500)
                 .json({
                     status: "ko",
-                    data : "Wrong password"
+                    data: "Wrong password"
                 })
         else {
+            if (!results[0].is_verified) {
+                res.status(403)
+                    .json({
+                        status : "ko",
+                        data : "Not confirmed"
+                    })
+                return;
+            }
             bcrypt.compare(password, results[0].password, function (err, res2) {
                 if (res2) {
                     let token = jwt.createJWToken(req.body);

@@ -3,7 +3,9 @@ CREATE TABLE IF NOT EXISTS users (
   name VARCHAR(150) NOT NULL,
   last_name VARCHAR(150) NOT NULL,
   mail VARCHAR(255) UNIQUE,
-  phone VARCHAR(255) ,
+  phone VARCHAR(255) UNIQUE,
   password VARCHAR(75),
-  role INT
+  role INT,
+  code INTEGER,
+  is_verified BOOLEAN
 )
