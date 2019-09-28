@@ -73,13 +73,15 @@ function signup(req, res, next) {
                         })
                 else {
                     // sendSMS(code, name, phone)
-                    let token = jwt.createJWToken(req.body);
-                    res.status(200)
-                        .json({
-                            status: "ok",
-                            token: token,
-                            data: req.body
-                        })
+                    db.query("SELECT * FROM USERS WHERE mail=? AND phone=?", [mail, phone], function (error, results, fields) {
+                        let token = jwt.createJWToken(results[0]);
+                        res.status(200)
+                            .json({
+                                status: "ok",
+                                token: token,
+                                data: results[0]
+                            })
+                    })
                 }
             });
         }
@@ -127,13 +129,7 @@ function confirmCode(req, res, next) {
                             res.status(200)
                                 .json({
                                     status: "ok",
-                                    data : {
-                                        id : results[0].id,
-                                        last_name : results[0].last_name,
-                                        name : results[0].name,
-                                        mail : results[0].mail,
-                                        role : results[0].role
-                                    }
+                                    data: results[0]
                                 })
                         }
                     })
@@ -163,8 +159,8 @@ function login(req, res, next) {
             if (!results[0].is_verified) {
                 res.status(403)
                     .json({
-                        status : "ko",
-                        data : "Not confirmed"
+                        status: "ko",
+                        data: "Not confirmed"
                     })
                 return;
             }
