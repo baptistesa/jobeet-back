@@ -15,7 +15,7 @@ function verifyUser(req, res, next) {
             res.status(400)
                 .json({
                     status : "ko",
-                    message: "Invalid token."
+                    message: err
                 })
         })
 

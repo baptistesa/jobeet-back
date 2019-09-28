@@ -149,7 +149,6 @@ function confirmCode(req, res, next) {
     })
 }
 
-
 function login(req, res, next) {
     var mail = req.body.mail;
     var password = req.body.password;
@@ -171,7 +170,7 @@ function login(req, res, next) {
             }
             bcrypt.compare(password, results[0].password, function (err, res2) {
                 if (res2) {
-                    let token = jwt.createJWToken(req.body);
+                    let token = jwt.createJWToken(results[0]);
                     res.status(200)
                         .json({
                             status: "ok",

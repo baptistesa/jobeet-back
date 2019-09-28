@@ -7,5 +7,6 @@ CREATE TABLE IF NOT EXISTS users (
   password VARCHAR(75),
   role INT,
   code INTEGER,
-  is_verified BOOLEAN
+  is_verified BOOLEAN,
+  picture_path VARCHAR
 )
