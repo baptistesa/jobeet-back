@@ -65,7 +65,7 @@ function signup(req, res, next) {
                 })
         else {
             password = res2;
-            db.query("INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified) VALUES(?, ?, ?, ?, ?, ?, ?, false)", [name, last_name, mail, phone, password, role, code], function (error, results, fields) {
+            db.query("INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified, picture_path) VALUES(?, ?, ?, ?, ?, ?, ?, false, 'placeholder_boy.jpg')", [name, last_name, mail, phone, password, role, code], function (error, results, fields) {
                 if (error)
                     res.status(500)
                         .json({
