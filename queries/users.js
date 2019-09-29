@@ -74,13 +74,15 @@ function signup(req, res, next) {
                 else {
                     // sendSMS(code, name, phone)
                     db.query("SELECT * FROM USERS WHERE mail=? AND phone=?", [mail, phone], function (error, results, fields) {
-                        let token = jwt.createJWToken(results[0]);
-                        res.status(200)
-                            .json({
-                                status: "ok",
-                                token: token,
-                                data: results[0]
-                            })
+                        var token = jwt.createJWToken(results[0]);
+                        db.query("INSERT INTO cv(id_user) VALUES (?)", [results[0].id], function (error, results2, fields) {
+                            res.status(200)
+                                .json({
+                                    status: "ok",
+                                    token: token,
+                                    data: results[0]
+                                })
+                        })
                     })
                 }
             });

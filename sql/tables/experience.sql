@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS experience (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  id_user : INT,
+  id_cv : INT,
   company : VARCHAR,
   description : TEXT,
   start_date : VARCHAR,
