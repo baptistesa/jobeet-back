@@ -19,11 +19,12 @@ function getEntreprises(req, res, next) {
                     status: "ko",
                     data: "error"
                 })
-        res.status(200)
-            .json({
-                status: "ok",
-                data: results
-            })
+        else
+           res.status(200)
+               .json({
+                   status: "ok",
+                   data: results
+               })
     })
 }
 
@@ -36,11 +37,12 @@ function getEntreprise(req, res, next) {
                     status: "ko",
                     data: "error"
                 })
-        res.status(200)
-            .json({
-                status: "ok",
-                data: results
-            })
+        else
+            res.status(200)
+                .json({
+                    status: "ok",
+                    data: results
+                 })
 
     });
 }
@@ -48,17 +50,21 @@ function getEntreprise(req, res, next) {
 function addEntreprise(req, res, next) {
     var name = req.body.name;
     var description = req.body.description;
+    console.log(name, description);
     db.query("INSERT INTO entreprises(name, description) VALUES(?, ?)", [name, description], function (error, results, fields) {
-        if (error)
+        if (error) {
             res.status(500)
                 .json({
                     status: "ko",
                     data: "error"
                 })
-        res.status(200)
-            .json({
-                status: "ok",
-                data: results[0]
-            })
+            console.log(error);
+            }
+        else
+            res.status(200)
+                .json({
+                    status: "ok",
+                    data: results
+                })
     });
 }
