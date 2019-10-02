@@ -9,5 +9,7 @@ var authMiddleware = require("../middleware/auth");
 router.get('/getOffres', Offres.getOffres);
 router.get('/getOffre/:id', Offres.getOffre);
 router.post('/addOffre', Offres.addOffre);
-router.post('/deleteOffre', Offres.deleteOffre);
+router.delete('/deleteOffre', Offres.deleteOffre);
 router.get('/getCount', Offres.getCount);
+
+module.exports = router;
