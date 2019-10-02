@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS entreprises (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  description TEXT
+)
