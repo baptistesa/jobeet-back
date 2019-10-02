@@ -44,19 +44,54 @@ function getOffres(req, res, next){
 
 /* Adds an offer contained in the request body */
 function addOffre(req, res, next){
-    var id = req.body.id;
     var title = req.body.title;
     var description = req.body.description;
     var id_author = req.body.id_author;
     var date = req.body.date;
 
-    db.query("INSERT INTO offres VALUES(?, ?, ?, ?, ?)", [id, title, description, id_author, date], function(errors, results, fields) {
+    db.query("INSERT INTO offres VALUES(?, ?, ?, ?)", [title, description, id_author, date], function(errors, results, fields) {
         if (error)
             res.status(500)
                 .json({
                     status: "ko",
                     data: "error"
                 })
+        res.status(200)
+            .json({
+                status: "ok",
+                data: results[0]
+            })
+    });
+}
+
+/* Deletes the offer corresponding to the id parameter */
+function deleteOffre(req, res, next){
+    var id = parseInt(req.params.id);
+
+    db.query("DELETE FROM offres WHERE id = ?", id, function(errors, results, fields) {
+        if (error)
+        res.status(500)
+            .json({
+                status: "ko",
+                data: "error"
+            })
+        res.status(200)
+            .json({
+                status: "ok",
+                data: results[0]
+            })
+    });
+}
+
+/* Returns the total number of offers */
+function getCount(req, res, next){
+    db.query("SELECT COUNT * FROM offres", function(errors, results, fields) {
+        if (error)
+        res.status(500)
+            .json({
+                status: "ko",
+                data: "error"
+            })
         res.status(200)
             .json({
                 status: "ok",
