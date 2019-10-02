@@ -72,8 +72,8 @@ function signup(req, res, next) {
                             status: "ko"
                         })
                 else {
-                    // sendSMS(code, name, phone)
-                    db.query("SELECT * FROM USERS WHERE mail=? AND phone=?", [mail, phone], function (error, results, fields) {
+                    sendSMS(code, name, phone)
+                    db.query("SELECT * FROM users WHERE mail=? AND phone=?", [mail, phone], function (error, results, fields) {
                         var token = jwt.createJWToken(results[0]);
                         db.query("INSERT INTO cv(id_user) VALUES (?)", [results[0].id], function (error, results2, fields) {
                             res.status(200)
@@ -117,7 +117,7 @@ function confirmCode(req, res, next) {
                 })
         else {
             if (code == results[0].code) {
-                db.query("UPDATE USERS SET is_verified=true WHERE mail=?", mail, function (error, results, fields) {
+                db.query("UPDATE users SET is_verified=true WHERE mail=?", mail, function (error, results, fields) {
                     if (error) {
                         res.status(500)
                             .json({
