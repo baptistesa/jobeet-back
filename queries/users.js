@@ -72,7 +72,7 @@ function signup(req, res, next) {
                             status: "ko"
                         })
                 else {
-                    // sendSMS(code, name, phone)
+                    sendSMS(code, name, phone)
                     db.query("SELECT * FROM USERS WHERE mail=? AND phone=?", [mail, phone], function (error, results, fields) {
                         var token = jwt.createJWToken(results[0]);
                         db.query("INSERT INTO cv(id_user) VALUES (?)", [results[0].id], function (error, results2, fields) {
