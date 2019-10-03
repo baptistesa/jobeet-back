@@ -95,7 +95,7 @@ function deleteOffre(req, res, next){
 
 /* Returns the total number of offers */
 function getCount(req, res, next){
-    db.query("SELECT COUNT * FROM offres", function(errors, results, fields) {
+    db.query("SELECT COUNT(*) FROM offres", function(errors, results, fields) {
         if (errors)
         res.status(500)
             .json({
