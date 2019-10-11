@@ -13,8 +13,8 @@ function addCV(req, res, next) {
     if (!description) {
         res.status(403)
             .json({
-                status : "ko",
-                data : "Description manquante"
+                status: "ko",
+                data: "Description manquante"
             })
         return;
     }
@@ -48,18 +48,32 @@ function addCV(req, res, next) {
 
 function getCV(req, res, next) {
     var id_user = req.params.id_user;
-    db.query("SELECT * FROM CV where id_user = ?", id_user, function (error, results, fields) {
+    console.log(id_user)
+    db.query("SELECT * FROM CV WHERE id_user = ?", [id_user], function (error, results, fields) {
         if (error) {
+            console.log(error)
             res.status(500)
                 .json({
                     status: "ko"
                 })
             return;
         }
-        res.status(200)
-            .json({
-                status: "ok",
-                data: results
-            })
+        db.query("SELECT * FROM CV, FORMATIONS WHERE CV.id = ? AND CV.id = FORMATIONS.id_cv", [results[0].id], function (error2, results2, fields2) {
+            if (error2) {
+                console.log(error2)
+                res.status(500)
+                    .json({
+                        status: "ko"
+                    })
+                return;
+            }
+
+            console.log(results2)
+            res.status(200)
+                .json({
+                    status: "ok",
+                    data: results2
+                })
+        })
     })
 }

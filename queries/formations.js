@@ -47,8 +47,9 @@ function addFormation(req, res, next) {
         return;
     }
 
-    db.query("INSERT INTO formations VALUES(?, ?, ?, ?, ?)", [school, start_date, end_date, description, cv_id], function (error, results, fields) {
+    db.query("INSERT INTO FORMATIONS(school, start_date, end_date, description, id_cv) VALUES(?, ?, ?, ?, ?)", [school, start_date, end_date, description, cv_id], function (error, results, fields) {
         if (error) {
+            console.log("error = ", error)
             res.status(500)
                .json({
                    status: "ko"
@@ -61,12 +62,4 @@ function addFormation(req, res, next) {
                data: "Formation ajoutée"
            })
     })
-        .catch((err) => {
-            res.status(401)
-                .json({
-                    status: "ko",
-                    message: err
-                })
-            return;
-        })
 }
