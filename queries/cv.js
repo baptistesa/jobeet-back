@@ -58,7 +58,7 @@ function getCV(req, res, next) {
                 })
             return;
         }
-        db.query("SELECT * FROM CV, FORMATIONS WHERE CV.id = ? AND CV.id = FORMATIONS.id_cv", [results[0].id], function (error2, results2, fields2) {
+        db.query("SELECT * FROM FORMATIONS WHERE FORMATIONS.id_cv = ?", [results[0].id], function (error2, formations, fields2) {
             if (error2) {
                 console.log(error2)
                 res.status(500)
@@ -68,11 +68,12 @@ function getCV(req, res, next) {
                 return;
             }
 
-            console.log(results2)
+            console.log(formations)
             res.status(200)
                 .json({
                     status: "ok",
-                    data: results2
+                    cv: results[0],
+                    formations: formations
                 })
         })
     })
