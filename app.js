@@ -10,6 +10,7 @@ var cvRouter = require('./routes/cv');
 var entreprisesRouter = require('./routes/entreprises');
 var offresRouter = require("./routes/offres");
 var formationsRouter = require('./routes/formations');
+var experienceRouter = require('./routes/experience');
 var jwt = require("./queries/jwt");
 
 var app = express();
@@ -38,9 +39,10 @@ app.use(cors(corsOptions))
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/cv', cvRouter);
-app.use('/entreprises', entreprisesRouter)
+app.use('/entreprises', entreprisesRouter);
 app.use('/offres', offresRouter);
 app.use('/formations', formationsRouter);
+app.use('/experience', experienceRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
