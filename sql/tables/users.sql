@@ -8,5 +8,6 @@ CREATE TABLE IF NOT EXISTS users (
   role INT,
   code INTEGER,
   is_verified BOOLEAN,
-  picture_path VARCHAR(50)
+  picture_path VARCHAR(50),
+  id_entreprise INT
 )

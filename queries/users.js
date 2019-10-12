@@ -57,6 +57,8 @@ function signup(req, res, next) {
     var password = req.body.password;
     var role = req.body.role;
     var code = Math.floor(Math.random() * (100000 - 999999) + 999999);
+    var id_entreprise = req.body.id_entreprise;
+
     bcrypt.hash(password, 10, function (err, res2) {
         if (err)
             res.status(500)
@@ -65,7 +67,7 @@ function signup(req, res, next) {
                 })
         else {
             password = res2;
-            db.query("INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified, picture_path) VALUES(?, ?, ?, ?, ?, ?, ?, false, 'placeholder_boy.jpg')", [name, last_name, mail, phone, password, role, code], function (error, results, fields) {
+            db.query("INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified, picture_path, id_entreprise) VALUES(?, ?, ?, ?, ?, ?, ?, false, 'placeholder_boy.jpg', ?)", [name, last_name, mail, phone, password, role, code, id_entreprise], function (error, results, fields) {
                 if (error)
                     res.status(500)
                         .json({

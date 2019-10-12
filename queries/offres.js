@@ -58,8 +58,9 @@ function addOffre(req, res, next){
     var description = req.body.description;
     var id_author = req.body.id_author;
     var date = req.body.date;
+    var id_entreprise = req.body.id_entreprise;
 
-    db.query("INSERT INTO offres VALUES(?, ?, ?, ?, ?)", [id, title, description, id_author, date], function(errors, results, fields) {
+    db.query("INSERT INTO offres VALUES(?, ?, ?, ?, ?, ?)", [id, title, description, id_author, date, id_entreprise], function(errors, results, fields) {
         if (errors) {
             res.status(500)
                 .json({
