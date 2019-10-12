@@ -5,7 +5,7 @@ var auth = require("../queries/jwt")
 module.exports = {
     addCV: addCV,
     getCV: getCV,
-    modifyCV : modifyCV
+    modifyCV: modifyCV
 };
 
 function addCV(req, res, next) {
@@ -65,12 +65,22 @@ function getCV(req, res, next) {
                     })
                 return;
             }
-            res.status(200)
-                .json({
-                    status: "ok",
-                    cv: results[0],
-                    formations: formations
-                })
+            db.query("SELECT * FROM EXPERIENCE WHERE EXPERIENCE.id_cv = ?", [results[0].id], function (error3, experiences, fields2) {
+                if (error3) {
+                    res.status(500)
+                        .json({
+                            status: "ko"
+                        })
+                    return;
+                }
+                res.status(200)
+                    .json({
+                        status: "ok",
+                        cv: results[0],
+                        formations: formations,
+                        experiences: experiences
+                    })
+            })
         })
     })
 }

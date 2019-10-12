@@ -10,6 +10,7 @@ function addFormation(req, res, next) {
     var start_date = req.body.start_date;
     var end_date = req.body.end_date;
     var cv_id = req.body.cv_id;
+    var title = req.body.title;
 
     if (!school) {
         res.status(403)
@@ -38,7 +39,7 @@ function addFormation(req, res, next) {
         return;
     }
 
-    db.query("INSERT INTO FORMATIONS(school, start_date, end_date, description, id_cv) VALUES(?, ?, ?, ?, ?)", [school, start_date, end_date, description, cv_id], function (error, results, fields) {
+    db.query("INSERT INTO FORMATIONS(title, school, start_date, end_date, description, id_cv) VALUES(?, ?, ?, ?, ?, ?)", [title, school, start_date, end_date, description, cv_id], function (error, results, fields) {
         if (error) {
             console.log("error = ", error)
             res.status(500)
