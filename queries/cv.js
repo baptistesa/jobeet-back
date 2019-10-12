@@ -4,7 +4,8 @@ var auth = require("../queries/jwt")
 
 module.exports = {
     addCV: addCV,
-    getCV: getCV
+    getCV: getCV,
+    modifyCV : modifyCV
 };
 
 function addCV(req, res, next) {
@@ -77,4 +78,8 @@ function getCV(req, res, next) {
                 })
         })
     })
+}
+
+function modifyCV(req, res, next) {
+    
 }
