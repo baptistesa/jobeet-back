@@ -10,6 +10,7 @@ function addExperience(req, res, next) {
     var start_date = req.body.start_date;
     var end_date = req.body.end_date;
     var cv_id = req.body.cv_id;
+    var position = req.body.position;
 
     if (!company) {
         res.status(403)
@@ -38,7 +39,7 @@ function addExperience(req, res, next) {
         return;
     }
 
-    db.query("INSERT INTO experience(id_cv, company, description, start_date, end_date) VALUES(?, ?, ?, ?, ?)", [cv_id, company, description, start_date, end_date], function(errors, results, fields) {
+    db.query("INSERT INTO experience(position, id_cv, company, description, start_date, end_date) VALUES(?, ?, ?, ?, ?, ?)", [position, cv_id, company, description, start_date, end_date], function(errors, results, fields) {
         if (errors) {
             console.log("error = ", errors)
             res.status(500)
