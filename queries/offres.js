@@ -33,17 +33,20 @@ function getOffre(req, res, next){
 function getOffres(req, res, next){
     var start = parseInt(req.params.start);
     var end = parseInt(req.params.end);
-    db.query("SELECT * FROM offres LIMIT ? OFFSET ?", [end, start], function (error, results, fields) {
-        if (errors)
+    db.query("SELECT * FROM offres", function (error, results, fields) {
+        if (error) {
+            console.log(error);
             res.status(500)
                 .json({
                     status: "ko",
                     data: "error"
                 })
+            return;
+            }
         res.status(200)
             .json({
                 status: "ok",
-                data: results[0]
+                data: results
             })
     });
 }

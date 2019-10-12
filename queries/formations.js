@@ -29,15 +29,6 @@ function addFormation(req, res, next) {
         return;
     }
 
-    if (!end_date){
-        res.status(403)
-            .json({
-                status: "ko",
-                data: "Date de fin manquante"
-            })
-        return;
-    }
-
     if (!cv_id){
         res.status(403)
             .json({
