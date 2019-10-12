@@ -1,7 +1,8 @@
 var db = require("../sql/init");
 
 module.exports = {
-    addExperience : addExperience
+    addExperience : addExperience,
+    removeExperience : removeExperience
 }
 
 function addExperience(req, res, next) {
@@ -52,6 +53,35 @@ function addExperience(req, res, next) {
             .json({
                 status: "ok",
                 data: "Expérience ajoutée"
+            })
+    })
+}
+
+function removeExperience(req, res, next){
+    var id = req.body.id;
+
+    if (!id){
+        res.status(403)
+            .json({
+                status: "ko",
+                data: "ID manquant"
+            })
+        return;
+    }
+
+    db.query("DELETE FROM experience WHERE id=?", [id], function (errors, results, fields) {
+        if (errors) {
+            console.log("error = ", errors)
+            res.status(500)
+                .json({
+                    status: "ko"
+                })
+            return;
+        }
+        res.status(200)
+            .json({
+                status: "ok",
+                data: "Expérience supprimée"
             })
     })
 }
