@@ -76,13 +76,23 @@ function getCV(req, res, next) {
                         })
                     return;
                 }
-                res.status(200)
-                    .json({
-                        status: "ok",
-                        cv: results[0],
-                        formations: formations,
-                        experiences: experiences
-                    })
+                db.query("SELECT * FROM competences, user_competences WHERE user_competences.id_user = ? AND competences.id = user_competences.id_competence", [id_user], function (errors, competences, fields) {
+                    if (errors) {
+                        res.status(500)
+                            .json({
+                                status: "ko"
+                            })
+                        return;
+                    }
+                    res.status(200)
+                        .json({
+                            status: "ok",
+                            cv: results[0],
+                            formations: formations,
+                            experiences: experiences,
+                            competences : competences
+                        })
+                })
             })
         })
     })
