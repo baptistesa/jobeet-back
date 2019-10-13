@@ -5,7 +5,8 @@ module.exports = {
     createCompetence: createCompetence,
     getAllCompetences: getAllCompetences,
     addCompetencesToUser: addCompetencesToUser,
-    deleteCompetenceToUser : deleteCompetenceToUser
+    deleteCompetenceToUser: deleteCompetenceToUser,
+    addCompetencesToOffre : addCompetencesToOffre
 }
 
 function existCompetence(title) {
@@ -162,18 +163,97 @@ function addCompetencesToUser(req, res, next) {
 function deleteCompetenceToUser(req, res, next) {
     var id_competence = req.params.id;
     console.log(id_competence)
-    db.query("DELETE FROM user_competences WHERE id = ?", [id_competence], function(errors, results, fields) {
+    db.query("DELETE FROM user_competences WHERE id = ?", [id_competence], function (errors, results, fields) {
         if (errors) {
             console.log(errors)
             res.status(500)
                 .json({
-                    status : "ko"
+                    status: "ko"
                 })
             return;
         }
         res.status(200)
             .json({
-                status : "ok"
+                status: "ok"
             })
     })
+}
+
+
+
+
+
+
+
+
+
+function addCompetencesToOffre(req, res, next) {
+    var title = req.body.title;
+    var id_offre = req.body.id_offre;
+    db.query("SELECT * FROM competences WHERE title=?", [title], function (errors, results, rows) {
+        if (errors) {
+            res.status(500)
+                .json({
+                    status: "ko"
+                })
+            return;
+        }
+        if (results.length == 0) {
+            db.query("INSERT INTO competences(title) VALUES(?)", [title], function (errors, results, fields) {
+                if (errors) {
+                    res.status(500)
+                        .json({
+                            status: "ko"
+                        })
+                    return;
+                }
+                db.query("SELECT * FROM competences WHERE title = ?", [title], function (errors, results, fields) {
+                    if (errors) {
+                        res.status(500)
+                            .json({
+                                status: "ko"
+                            })
+                        return;
+                    }
+                    let id_competence = results[0].id;
+                    db.query("INSERT INTO offre_competences(id_offre, id_competence) VALUES(?,?)", [id_offre, id_competence], function (errors, results, fields) {
+                        if (errors) {
+                            res.status(500)
+                                .json({
+                                    status: "ko"
+                                })
+                        }
+                        res.status(200)
+                            .json({
+                                status: "ok"
+                            })
+                    })
+                })
+            })
+        }
+        else {
+            db.query("SELECT * FROM competences WHERE title = ?", [title], function (errors, results, fields) {
+                if (errors) {
+                    res.status(500)
+                        .json({
+                            status: "ko"
+                        })
+                    return;
+                }
+                let id_competence = results[0].id;
+                db.query("INSERT INTO offre_competences(id_offre, id_competence) VALUES(?,?)", [id_offre, id_competence], function (errors, results, fields) {
+                    if (errors) {
+                        res.status(500)
+                            .json({
+                                status: "ko"
+                            })
+                    }
+                    res.status(200)
+                        .json({
+                            status: "ok"
+                        })
+                })
+            })
+        }
+    });
 }
