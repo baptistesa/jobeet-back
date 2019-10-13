@@ -9,5 +9,6 @@ var middleware = require("../middleware/auth");
 router.post('/add', middleware.verifyUser, CV.addCV);
 router.get('/get/:id_user', CV.getCV);
 router.put('/modifyCV', middleware.verifyUser, CV.modifyCV);
+router.put('/modifyIdEntreprise', middleware.verifyUser, CV.modifyIdEntreprise);
 
 module.exports = router;
