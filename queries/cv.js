@@ -5,7 +5,8 @@ var auth = require("../queries/jwt")
 module.exports = {
     addCV: addCV,
     getCV: getCV,
-    modifyCV: modifyCV
+    modifyCV: modifyCV,
+    modifyIdEntreprise: modifyIdEntreprise
 };
 
 function addCV(req, res, next) {
@@ -127,4 +128,37 @@ function modifyCV(req, res, next) {
                 })
             return;
         })
+}
+
+function modifyIdEntreprise(req, res, next) {
+    var token = req.headers.authorization;
+    var id_entreprise = req.body.id_entreprise;
+    auth.verifyJWTToken(token)
+        .then((decodedToken) => {
+            var id_user = decodedToken.data.id
+            db.query("UPDATE users SET id_entreprise = ? WHERE id = ?", [id_entreprise, id_user], function (error, results, field){
+                if (error) {
+                    console.log(error)
+                    res.status(500)
+                        .json({
+                            status: "ko"
+                        })
+                    return;
+                }
+                res.status(200)
+                    .json({
+                        status: "ok",
+                        data: "id_entreprise updated"
+                    })
+            })
+        })
+        .catch((err) => {
+            res.status(401)
+                .json({
+                    status: "ko",
+                    message: err
+                })
+            return;
+        })
+
 }
