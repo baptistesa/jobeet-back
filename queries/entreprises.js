@@ -62,11 +62,17 @@ function addEntreprise(req, res, next) {
                 })
             }
         else
-            res.status(200)
+        {
+            db.query("SELECT * FROM entreprises WHERE name= ?", [name], function(errors, results, fields){
+                res.status(200)
                 .json({
                     status: "ok",
                     data: results
                 })
+
+            })
+        }
+            
     });
 }
 
