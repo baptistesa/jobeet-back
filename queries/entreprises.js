@@ -5,9 +5,9 @@ module.exports = {
     getEntreprise: getEntreprise,
     addEntreprise: addEntreprise,
     getCount: getCount,
-    //getEmployees: getEmployees,
+    getEmployees: getEmployees,
+    getEntrepriseOffres: getEntrepriseOffres,
     //getEmployeeEntreprise: getEmployeeEntreprise,
-    //addUserEntreprise: addUserEntreprise,
     deleteEntreprise: deleteEntreprise
 }
 
@@ -46,6 +46,44 @@ function getEntreprise(req, res, next) {
                     data: results
                  })
 
+    });
+}
+
+// Return employees of the entreprise corresponding to the id parameter
+function getEmployees(req, res, next) {
+    var id = parseInt(req.params.id);
+    db.query("SELECT * FROM users WHERE id_entreprise = ?", id, function (error, results, fields){
+        if (error)
+            res.status(500)
+                .json({
+                    status: "ko",
+                    data: "error"
+                })
+        else
+            res.status(200)
+                .json({
+                    status: "ok",
+                    data: results
+                })
+    });
+}
+
+//Return offers of the entreprise corresponding to the id parameter
+function getEntrepriseOffres(req, res, next) {
+    var id = parseInt(req.params.id);
+    db.query("SELECT * FROM offres WHERE id_entreprise = ?", id, function (error, results, fields){
+        if (error)
+            res.status(500)
+                .json({
+                    status: "ko",
+                    data: "error"
+                })
+        else
+            res.status(200)
+                .json({
+                    status: "ok",
+                    data: results
+                })
     });
 }
 
