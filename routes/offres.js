@@ -13,6 +13,7 @@ router.get('/getOffre/:id', Offres.getOffre);
 router.post('/addOffre', Offres.addOffre);
 router.delete('/deleteOffre', Offres.deleteOffre);
 router.get('/getCount', Offres.getCount);
+router.get('/getCompetences/:offre_id', Offres.getCompetencesById);
 
 router.get("/algo", algo.runAlgo);
 
