@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 var Matchs = require("../queries/matchs");
-var auth = require("../queries/jwt");
 
 router.get('/addMatch', Matchs.addMatch);
 router.get('/deleteMatch/:id', Matchs.deleteMatch);

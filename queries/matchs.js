@@ -1,4 +1,5 @@
 var db = require("../sql/init");
+var auth = require("../queries/jwt")
 
 module.exports = {
     addMatch: addMatch,
@@ -55,7 +56,7 @@ function deleteMatch(req, res, next) {
 function acceptMatch(req, res, next) {
     var id = parseInt(req.params.id);
     db.query("UPDATE matchs SET is_valid = true WHERE id = ?", id, function (error, results, fields) {
-        if (errors)
+        if (error)
             res.status(500)
                 .json({
                     status: "ko",
@@ -71,11 +72,12 @@ function acceptMatch(req, res, next) {
 
 //Get matchs for the user corresponding to the id parameter
 function getUserMatch(req, res, next) {
+    var token = req.headers.authorization;
     auth.verifyJWTToken(token)
         .then((decodedToken) => {
             var id_user = decodedToken.data.id
             db.query("SELECT * FROM matchs WHERE id_user = ?", id_user, function (error, results, fields) {
-                if (errors)
+                if (error)
                     res.status(500)
                         .json({
                             status: "ko",
@@ -92,11 +94,12 @@ function getUserMatch(req, res, next) {
 
 //Get matchs for the recruiter corresponding to the id parameter
 function getRecruteurMatch(req, res, next) {
+    var token = req.headers.authorization;
     auth.verifyJWTToken(token)
         .then((decodedToken) => {
-            var id_recruteur = decodedToken.data.id
-            db.query("SELECT * FROM matchs WHERE id_recruteur = ?", id_recruteur, function (error, results, fields) {
-                if (errors)
+            var id_recruteur = decodedToken.data.id;
+            db.query("SELECT * FROM matchs WHERE id_recruteur = ?", [id_recruteur], function (error, results, fields) {
+                if (error)
                     res.status(500)
                         .json({
                             status: "ko",

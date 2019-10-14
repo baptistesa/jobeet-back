@@ -32,8 +32,9 @@ function getAllUsers(req, res, next) {
 }
 
 function getUser(req, res, next) {
-    var id = parseInt(req.params.id);
-    db.query("SELECT * FROM users WHERE id = ?", id, function (error, results, fields) {
+    var id = req.params.id;
+    console.log(id)
+    db.query("SELECT * FROM users WHERE id = ?", [id], function (error, results, fields) {
         if (error)
             res.status(500)
                 .json({
