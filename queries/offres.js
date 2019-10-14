@@ -5,7 +5,8 @@ module.exports = {
     getOffres: getOffres,
     addOffre: addOffre,
     deleteOffre: deleteOffre,
-    getCount: getCount
+    getCount: getCount,
+    getCompetencesById : getCompetencesById
 };
 
 /* Returns the offer corresponding to the 'id' parameter */
@@ -115,4 +116,24 @@ function getCount(req, res, next) {
                 data: results[0]
             })
     });
+}
+
+// Get competences by offre id
+function getCompetencesById(req, res, next) {
+    var offre_id = req.params.offre_id;
+    db.query("SELECT * FROM offre_competences, competences WHERE offre_competences.id_offre = ? AND offre_competences.id_competence = competences.id", [offre_id], function(errors, results, fields) {
+        if (errors) {
+            console.log(errors)
+            res.status(500)
+                .json({
+                    status : "ko"
+                })
+            return;
+        }
+        res.status(200)
+            .json({
+                status : "ok",
+                data : results
+            })
+    })
 }

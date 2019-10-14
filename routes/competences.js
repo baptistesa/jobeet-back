@@ -7,5 +7,7 @@ router.get('/all', competences.getAllCompetences);
 router.post('/create', competences.createCompetence);
 router.post('/addToUser', competences.addCompetencesToUser);
 router.delete('/delete/:id', competences.deleteCompetenceToUser);
+router.post('/addToOffre', competences.addCompetencesToOffre);
+
 
 module.exports = router;
