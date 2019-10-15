@@ -54,7 +54,7 @@ function deleteMatch(req, res, next) {
 
 //Accept Match
 function acceptMatch(req, res, next) {
-    var id = parseInt(req.params.id);
+    var id = req.body.id;
     db.query("UPDATE matchs SET is_valid = true WHERE id = ?", id, function (error, results, fields) {
         if (error)
             res.status(500)
