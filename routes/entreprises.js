@@ -11,5 +11,6 @@ router.get('/getEntrepriseOffres/:id', Entreprises.getEntrepriseOffres);
 router.get('/getCount', Entreprises.getCount);
 router.post('/addEntreprise', Entreprises.addEntreprise);
 router.delete('/deleteEntreprise/:id', Entreprises.deleteEntreprise);
+router.put('/updateDescription', Entreprises.updateDescription);
 
 module.exports = router;
