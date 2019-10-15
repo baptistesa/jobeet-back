@@ -34,6 +34,7 @@ var storage = multer.diskStorage({
                 let filename = file.fieldname + '-' + Date.now() + id_user + "." + ext
                 db.query("UPDATE users SET picture_path=? WHERE id=?", [filename, id_user], function (error, results, fields) {
                     if (error) {
+                        console.log(error)
                         cb("Error processing file", null);
                         return;
                     }
