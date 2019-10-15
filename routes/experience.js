@@ -4,6 +4,6 @@ var router = express.Router();
 var experience = require("../queries/experience");
 
 router.post('/add', experience.addExperience);
-router.post('/delete', experience.removeExperience);
+router.delete('/delete/:id', experience.removeExperience);
 
 module.exports = router;

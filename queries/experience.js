@@ -58,20 +58,10 @@ function addExperience(req, res, next) {
 }
 
 function removeExperience(req, res, next){
-    var id = req.body.id;
-
-    if (!id){
-        res.status(403)
-            .json({
-                status: "ko",
-                data: "ID manquant"
-            })
-        return;
-    }
+    var id = parseInt(req.params.id);
 
     db.query("DELETE FROM experience WHERE id=?", [id], function (errors, results, fields) {
         if (errors) {
-            console.log("error = ", errors)
             res.status(500)
                 .json({
                     status: "ko"
