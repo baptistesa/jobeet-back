@@ -76,7 +76,7 @@ function getUserMatch(req, res, next) {
     auth.verifyJWTToken(token)
         .then((decodedToken) => {
             var id_user = decodedToken.data.id
-            db.query("SELECT * FROM matchs WHERE id_user = ?", id_user, function (error, results, fields) {
+            db.query("SELECT matchs.id, matchs.id_user, matchs.id_recruteur, matchs.id_offre, matchs.is_valid, users.id, users.name, users.last_name, users.picture_path, users.id_entreprise FROM matchs, users WHERE matchs.id_user = ? AND matchs.id_recruteur = users.id", id_user, function (error, results, fields) {
                 if (error)
                     res.status(500)
                         .json({

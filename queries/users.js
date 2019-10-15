@@ -33,14 +33,15 @@ function getAllUsers(req, res, next) {
 
 function getUser(req, res, next) {
     var id = req.params.id;
-    console.log(id)
     db.query("SELECT * FROM users WHERE id = ?", [id], function (error, results, fields) {
-        if (error)
+        if (error) {
             res.status(500)
                 .json({
                     status: "ko",
                     data: "error"
                 })
+            return;
+        }
         res.status(200)
             .json({
                 status: "ok",
@@ -75,7 +76,7 @@ function signup(req, res, next) {
                             status: "ko"
                         })
                 else {
-                    sendSMS(code, name, phone)
+                    // sendSMS(code, name, phone)
                     db.query("SELECT * FROM users WHERE mail=? AND phone=?", [mail, phone], function (error, results, fields) {
                         var token = jwt.createJWToken(results[0]);
                         db.query("INSERT INTO cv(id_user) VALUES (?)", [results[0].id], function (error, results2, fields) {
