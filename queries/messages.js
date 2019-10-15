@@ -23,7 +23,7 @@ function addMessage(req, res, next) {
                         message: "Don't do that"
                     })
             }
-            db.query("INSERT INTO messages(id_user, id_offre, message, id_recruteur, id_room) VALUES(?, ?, ?, ?, ?)", [id_user, id_offre, message, id_recruteur, id_room], function (errors, results, fields) {
+            db.query("INSERT INTO messages(id_exp, id_offre, message, id_dest, id_room) VALUES(?, ?, ?, ?, ?)", [id_user, id_offre, message, id_recruteur, id_room], function (errors, results, fields) {
                 if (errors) {
                     res.status(500)
                         .json({
@@ -43,11 +43,13 @@ function addMessage(req, res, next) {
 function getMessages(req, res, next) {
     var id_room = req.params.id_room;
     var token = req.headers.authorization;
+    var id_offre = req.params.id_offre;
+    console.log("id offre : ", id_offre)
 
     auth.verifyJWTToken(token)
         .then((decodedToken) => {
             var id_user = decodedToken.data.id
-            db.query("SELECT * FROM messages WHERE id_room = ? AND (id_recruteur = ? OR id_user = ?)", [id_room, id_user], function (errors, results, fields) {
+            db.query("SELECT * FROM messages WHERE id_room = ? AND (id_exp = ? OR id_dest = ?)", [id_room, id_user, id_user], function (errors, results, fields) {
                 if (errors) {
                     res.status(500)
                         .json({
