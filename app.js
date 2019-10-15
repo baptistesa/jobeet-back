@@ -12,6 +12,7 @@ var offresRouter = require("./routes/offres");
 var formationsRouter = require('./routes/formations');
 var experienceRouter = require('./routes/experience');
 var competenceRouter = require('./routes/competences');
+var matchsRouter = require('./routes/matchs')
 var jwt = require("./queries/jwt");
 
 var app = express();
@@ -45,6 +46,7 @@ app.use('/offres', offresRouter);
 app.use('/formations', formationsRouter);
 app.use('/experience', experienceRouter);
 app.use('/competences', competenceRouter);
+app.use('/matchs', matchsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

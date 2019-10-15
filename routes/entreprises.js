@@ -10,6 +10,6 @@ router.get('/getEmployees/:id', Entreprises.getEmployees);
 router.get('/getEntrepriseOffres/:id', Entreprises.getEntrepriseOffres);
 router.get('/getCount', Entreprises.getCount);
 router.post('/addEntreprise', Entreprises.addEntreprise);
-router.post('/deleteEntreprise/:id', Entreprises.deleteEntreprise);
+router.delete('/deleteEntreprise/:id', Entreprises.deleteEntreprise);
 
 module.exports = router;
