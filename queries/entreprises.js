@@ -92,7 +92,7 @@ function getEntrepriseOffres(req, res, next) {
 function addEntreprise(req, res, next) {
     var name = req.body.name;
     var description = req.body.description;
-    db.query("INSERT INTO entreprises(name, description) VALUES(?, ?)", [name, description], function (error, results, fields) {
+    db.query("INSERT INTO entreprises(name, description, picture_path) VALUES(?, ?, 'placeholder_company.png')", [name, description], function (error, results, fields) {
         if (error) {
             res.status(500)
                 .json({
