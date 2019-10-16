@@ -18,13 +18,13 @@ source _offre_competences.sql;
 
 /*Insertion of users and cv*/
 /*Password = Lovelace2020*/
-INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified, picture_path, id_entreprise) VALUES ('Joffrey', 'MARC', 'joffrey.marc@epita.fr', '+33631342623', '$2a$10$un5FEMgUZsCv5HzFQd98Tueww46Dm.vQffi1bb827N3dDNT0X6PfG', 1, 280797, true, 'placeholder_boy.jpg', 1);
+INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified, picture_path, id_entreprise) VALUES ('Joffrey', 'MARC', 'joffrey.marc@epita.fr', '+33631342623', '$2a$10$un5FEMgUZsCv5HzFQd98Tueww46Dm.vQffi1bb827N3dDNT0X6PfG', 1, 280797, true, 'joffrey.png', 1);
 INSERT INTO cv(id_user, description) VALUES (1, 'Étudiant EPITA SIGL');
-INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified, picture_path, id_entreprise) VALUES ('Lisa', 'CASTAIGNEDE', 'lisa.castaignede@epita.fr', '+33682045274', '$2a$10$un5FEMgUZsCv5HzFQd98Tueww46Dm.vQffi1bb827N3dDNT0X6PfG', 1, 100297, true, 'placeholder_boy.jpg', 5);
+INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified, picture_path, id_entreprise) VALUES ('Lisa', 'CASTAIGNEDE', 'lisa.castaignede@epita.fr', '+33682045274', '$2a$10$un5FEMgUZsCv5HzFQd98Tueww46Dm.vQffi1bb827N3dDNT0X6PfG', 1, 100297, true, 'lisa.png', 5);
 INSERT INTO cv(id_user, description) VALUES (2, 'Étudiant EPITA SIGL');
-INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified, picture_path, id_entreprise) VALUES ('Baptiste', 'SAINT-ANDRE', 'baptiste.saint-andre@epita.fr', '+33638614907', '$2a$10$un5FEMgUZsCv5HzFQd98Tueww46Dm.vQffi1bb827N3dDNT0X6PfG', 0, 161019, true, 'placeholder_boy.jpg', null);
+INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified, picture_path, id_entreprise) VALUES ('Baptiste', 'SAINT-ANDRE', 'baptiste.saint-andre@epita.fr', '+33638614907', '$2a$10$un5FEMgUZsCv5HzFQd98Tueww46Dm.vQffi1bb827N3dDNT0X6PfG', 0, 161019, true, 'baptiste.png', null);
 INSERT INTO cv(id_user, description) VALUES (3, 'Étudiant EPITA SIGL');
-INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified, picture_path, id_entreprise) VALUES ('Bertrand', 'HA', 'bertrand.ha@epita.fr', '+33661030998', '$2a$10$un5FEMgUZsCv5HzFQd98Tueww46Dm.vQffi1bb827N3dDNT0X6PfG', 0, 171019, true, 'placeholder_boy.jpg', null);
+INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified, picture_path, id_entreprise) VALUES ('Bertrand', 'HA', 'bertrand.ha@epita.fr', '+33661030998', '$2a$10$un5FEMgUZsCv5HzFQd98Tueww46Dm.vQffi1bb827N3dDNT0X6PfG', 0, 171019, true, 'bertrand.png', null);
 INSERT INTO cv(id_user, description) VALUES (4, 'Étudiant EPITA SIGL');
 INSERT INTO users(name, last_name, mail, phone, password, role, code, is_verified, picture_path, id_entreprise) VALUES ('Robin', 'DUVAL', 'robin.duval@epita.fr', '+33607080910', '$2a$10$un5FEMgUZsCv5HzFQd98Tueww46Dm.vQffi1bb827N3dDNT0X6PfG', 1, 345213, true, 'placeholder_boy.jpg', 11);
 INSERT INTO cv(id_user, description) VALUES (5, 'Professeur EPITA SIGL');
