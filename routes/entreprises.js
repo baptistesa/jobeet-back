@@ -8,14 +8,14 @@ var auth = require("../queries/jwt");
 
 var authMiddleware = require("../middleware/auth");
 
-router.get('/getEntreprises', Entreprises.getEntreprises);
-router.get('/getEntreprise/:id', Entreprises.getEntreprise);
-router.get('/getEmployees/:id', Entreprises.getEmployees);
-router.get('/getEntrepriseOffres/:id', Entreprises.getEntrepriseOffres);
-router.get('/getCount', Entreprises.getCount);
-router.post('/addEntreprise', Entreprises.addEntreprise);
-router.delete('/deleteEntreprise/:id', Entreprises.deleteEntreprise);
-router.put('/updateDescription', Entreprises.updateDescription);
+router.get('/getEntreprises', authMiddleware.verifyUser, Entreprises.getEntreprises);
+router.get('/getEntreprise/:id', authMiddleware.verifyUser, Entreprises.getEntreprise);
+router.get('/getEmployees/:id', authMiddleware.verifyUser, Entreprises.getEmployees);
+router.get('/getEntrepriseOffres/:id', authMiddleware.verifyUser, Entreprises.getEntrepriseOffres);
+router.get('/getCount', authMiddleware.verifyUser, Entreprises.getCount);
+router.post('/addEntreprise', authMiddleware.verifyUser, Entreprises.addEntreprise);
+router.delete('/deleteEntreprise/:id', authMiddleware.verifyUser, Entreprises.deleteEntreprise);
+router.put('/updateDescription', authMiddleware.verifyUser, Entreprises.updateDescription);
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
